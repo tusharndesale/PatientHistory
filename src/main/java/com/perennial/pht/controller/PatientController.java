@@ -1,6 +1,7 @@
 package com.perennial.pht.controller;
 
 import com.perennial.pht.model.Patient;
+import com.perennial.pht.model.Vitals;
 import com.perennial.pht.service.IService.IpatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,11 +51,17 @@ public class PatientController {
          return patientService.deletePatient(patientId);
 
     }
-   /* @PostMapping("/delvitalbete/{patientId}")
-    public Patient deletePatient(@PathVariable long patientId){
-        return patientService.deletePatient(patientId);
+    @PostMapping("/addvital/{patientId}")
+    public Vitals addPatientVital(@PathVariable Integer patientId, @RequestBody Vitals vitalValues){
+        vitalValues.setPatientId(patientId);
+        return patientService.addPatientVital(vitalValues);
 
-    }*/
+    }
+    @GetMapping("/vital/{patientId}")
+    public List<Vitals> getVitaldetails(@PathVariable Integer patientId){
+       return patientService.getVitaldetails(patientId);
+
+    }
 
 
 

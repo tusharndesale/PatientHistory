@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Register {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
   //  private Patient patient = new Patient();
     private LocalDate date;

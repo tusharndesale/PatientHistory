@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Doctor {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Column
     private String name;

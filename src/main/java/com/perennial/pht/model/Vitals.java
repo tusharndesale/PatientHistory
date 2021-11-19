@@ -1,10 +1,10 @@
 package com.perennial.pht.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import java.util.List;
 
 @Getter
@@ -13,9 +13,13 @@ import java.util.List;
 @Entity
 @Table(name = "vitals")
 public class Vitals {
+
+        public Vitals() {
+        }
+
         @Id
         @Column
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private Integer id;
          //  height, weight, Blood pressure, body temperature, Oxygen level
         @Column
@@ -25,11 +29,15 @@ public class Vitals {
         @Column
         private Float weight;   // in Kg
         @Column
-        private Float bloodTemperature; //in Farenide
+        private Float bodyTemperature; //in Fahrenheit
         @Column
+        @Max(value = 100)
         private Float oxygenLevel;
+        @Column
+        private Float heartBeatRate;
         @Column
         @ElementCollection
         @CollectionTable(name="vitalsBloodPressure", joinColumns = @JoinColumn(name="id"))
         private List<Float> bloodPressure;
+
 }

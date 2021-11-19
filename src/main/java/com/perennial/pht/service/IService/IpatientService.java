@@ -1,6 +1,7 @@
 package com.perennial.pht.service.IService;
 
 import com.perennial.pht.model.Patient;
+import com.perennial.pht.model.Vitals;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -19,4 +20,9 @@ public interface IpatientService {
     ResponseEntity<HttpStatus> deletePatient(long id);
 
     Patient testbyID(long id);
+
+    Vitals addPatientVital(Vitals vitalValues);
+
+
+    List<Vitals> getVitaldetails(Integer patientId);
 }

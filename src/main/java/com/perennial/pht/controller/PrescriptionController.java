@@ -22,9 +22,10 @@ public IprescriptionService prescriptionService;
         return prescriptionService.getPrescription(id);
     }
 
-   /* @GetMapping("/downloadpdf/{id}")
-    public ResponseEntity<Prescription> getPrescription(@PathVariable Integer id){
+    @GetMapping("/downloadpdf/{id}")
+    public ResponseEntity<Prescription> downloadPrescription(@PathVariable Integer id){
+      //  Prescription prescription= prescriptionService.getPrescription(id);
         return prescriptionService.getPrescription(id);
     }
-*/
+
 }

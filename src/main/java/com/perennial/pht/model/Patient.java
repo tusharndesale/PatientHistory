@@ -1,11 +1,14 @@
 package com.perennial.pht.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -15,14 +18,14 @@ import java.util.List;
 public class Patient {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Column
     private String name;
     @Column
     private long mobileNo;
     @Column
-    private String gender;
+    private GenderType gender;
     @Column
     private int age;
     @Column
@@ -41,7 +44,28 @@ public class Patient {
 
     //private Doctor doctor;
 
+    public enum GenderType {
 
+        TYPE1("MALE"),
+        TYPE2("FEMALE"),
+        TYPE3("OTHERS");
+
+        private String code;
+
+        private GenderType(String code) {
+            this.code=code;
+        }
+
+        @JsonCreator
+        public static GenderType decode(final String code) {
+            return Stream.of(GenderType.values()).filter(targetEnum -> targetEnum.code.equals(code)).findFirst().orElse(null);
+        }
+
+        @JsonValue
+        public String getCode() {
+            return code;
+        }
+    }
 
 
 }

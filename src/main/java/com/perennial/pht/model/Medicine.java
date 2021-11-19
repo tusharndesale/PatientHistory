@@ -16,7 +16,7 @@ public class Medicine {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @Column
     private String drugType; // tablet, capsule, syrup, injection, tube
