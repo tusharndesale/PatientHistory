@@ -1,0 +1,52 @@
+package com.perennial.pht.controller;
+
+import com.perennial.pht.dao.IDao.IDoctorDao;
+import com.perennial.pht.model.Doctor;
+import com.perennial.pht.service.IService.IdoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/doctor")
+public class DoctorController {
+
+
+    public IdoctorService doctorService;
+
+    @GetMapping("/getAll")
+    public List<Doctor> getAllDoctors(){
+        return doctorService.getAllDoctors();
+    }
+    @PostMapping("/save")
+    public Doctor createRecord(@RequestBody Doctor doctor){
+        return doctorService.createRecord(doctor);
+    }
+
+    @GetMapping("/findBy/{doctorId}")
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable long doctorId){
+       // return service.getDoctorById(doctorId);
+        return doctorService.getDoctorById(doctorId);
+
+    }
+
+    @PutMapping("/updateById/{doctorId}")
+    public  ResponseEntity<Doctor> updateDoctor(@PathVariable long doctorId, @RequestBody Doctor doctorDetails){
+        return doctorService.updateDoctor(doctorId,doctorDetails);
+
+    }
+
+    @DeleteMapping("/delete/{doctorId}")
+    public ResponseEntity<HttpStatus> deleteDoctor(@PathVariable long doctorId){
+        return doctorService.deleteDoctor(doctorId);
+    }
+    @PostMapping("/addVital")
+    public List<String> addVitals(@RequestBody List<String> vitalList){
+        return doctorService.addVitals(vitalList);
+    }
+
+}
