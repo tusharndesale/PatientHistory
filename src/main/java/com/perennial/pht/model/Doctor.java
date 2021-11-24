@@ -34,7 +34,4 @@ public class Doctor {
     @CollectionTable(name="doctorsVitals", joinColumns = @JoinColumn(name="id"))
     private List<String> vitals;
 
-//
-
-
 }

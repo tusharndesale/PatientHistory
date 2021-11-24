@@ -23,7 +23,6 @@ public class Vitals {
         @Column
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private Integer id;
-         //  height, weight, Blood pressure, body temperature, Oxygen level
         @Column
         private Integer patientId;
         @Column

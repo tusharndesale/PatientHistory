@@ -1,7 +1,7 @@
 package com.perennial.pht.controller;
 
 import com.perennial.pht.model.Prescription;
-import com.perennial.pht.service.IService.IprescriptionService;
+import com.perennial.pht.service.serviceInterfaces.IprescriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/prescription")
 public class PrescriptionController {
 
-//@Autowired
 public IprescriptionService prescriptionService;
 
     @PostMapping("/save")
@@ -23,7 +22,6 @@ public IprescriptionService prescriptionService;
 
     @GetMapping("/downloadpdf/{id}")
     public ResponseEntity<Prescription> downloadPrescription(@PathVariable Integer id){
-      //  Prescription prescription= prescriptionService.getPrescription(id);
         return prescriptionService.getPrescription(id);
     }
 

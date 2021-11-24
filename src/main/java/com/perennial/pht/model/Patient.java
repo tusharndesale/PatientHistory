@@ -30,13 +30,4 @@ public class Patient {
     @Column
     private String address;
 
-    /*@ElementCollection
-    @CollectionTable(name="prescriptionDrug", joinColumns = @JoinColumn(name="id"))
-    private List<Vitals> vitals;*/
-
-    //private Doctor doctor;
-
-
-
-
 }

@@ -1,10 +1,9 @@
 package com.perennial.pht.controller;
 
 import com.perennial.pht.excel.PatientExcel;
-import com.perennial.pht.excel.ResponseMessage;
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
-import com.perennial.pht.service.IService.IpatientService;
+import com.perennial.pht.service.serviceInterfaces.IpatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/patients")
 public class PatientController {
 //
     @Autowired
@@ -29,21 +28,12 @@ public class PatientController {
 
     @Value("${app.upload.dir:${user.home}}")
     public String uploadDir;
-/*
-    @GetMapping("/home")
-    public String homePage(){
-        return "Home";
-    }*/
 
- /*   @GetMapping("/test/{id}")
-    public Patient testbyID(@PathVariable long id){
-        return patientService.testbyID(id);
-    }
-*/
     @GetMapping("/getAll")
     public List<Patient> getAllPatients(){
         return patientService.getAllPatients();
     }
+
     @PostMapping("/save")
     public Patient createRecord(@RequestBody Patient patient){
         return patientService.createRecord(patient);
@@ -64,40 +54,27 @@ public class PatientController {
          return patientService.deletePatient(patientId);
 
     }
-   /* @PostMapping("/addvital/{patientId}")
-    public Vitals addPatientVital(@PathVariable Integer patientId, @RequestBody Vitals vitalValues){
-        vitalValues.setPatientId(patientId);
-        return patientService.addPatientVital(vitalValues);
 
-    }*/
     @GetMapping("/vital/{patientId}")
     public List<Vitals> getVitaldetails(@PathVariable Integer patientId){
        return patientService.getVitaldetails(patientId);
 
     }
     @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
+    public ResponseEntity<HttpStatus> uploadFile(@RequestParam("file") MultipartFile file) {
 
         if (PatientExcel.hasExcelFormat(file)) {
             try {
                 patientService.uploadFile(file);
-                //store File in
+
                 Path storageLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
                 Files.copy(file.getInputStream(), storageLocation, StandardCopyOption.REPLACE_EXISTING);
 
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+                return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-        message = "Please upload an excel file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
-
-
-
-
 }

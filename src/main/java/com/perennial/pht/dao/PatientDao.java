@@ -1,6 +1,6 @@
 package com.perennial.pht.dao;
 
-import com.perennial.pht.dao.IDao.IPatientDao;
+import com.perennial.pht.dao.daoInterfaces.IPatientDao;
 import com.perennial.pht.excel.PatientExcel;
 import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Patient;
@@ -66,8 +66,7 @@ public class PatientDao implements IPatientDao {
 
     @Override
     public Patient testbyID(long id) {
-        Patient patient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
-        return patient;
+        return patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
 
     }
 
@@ -89,10 +88,6 @@ public class PatientDao implements IPatientDao {
             hql = "FROM Vitals WHERE patientId = "+patientId;
             Query query = session.createQuery(hql);
             result = query.list();
-
-            result.forEach(ele ->{
-                System.out.println(ele.toString());
-            });
         }catch(Exception ex){
             ex.printStackTrace();
         }

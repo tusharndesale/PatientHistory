@@ -2,7 +2,7 @@ package com.perennial.pht.service;
 
 import com.perennial.pht.dao.DoctorDao;
 import com.perennial.pht.model.Doctor;
-import com.perennial.pht.service.IService.IdoctorService;
+import com.perennial.pht.service.serviceInterfaces.IdoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

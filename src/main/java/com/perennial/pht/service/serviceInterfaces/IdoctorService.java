@@ -1,4 +1,4 @@
-package com.perennial.pht.service.IService;
+package com.perennial.pht.service.serviceInterfaces;
 
 import com.perennial.pht.model.Doctor;
 import org.springframework.http.HttpStatus;
