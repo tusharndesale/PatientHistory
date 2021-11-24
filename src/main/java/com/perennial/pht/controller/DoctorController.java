@@ -1,10 +1,7 @@
 package com.perennial.pht.controller;
 
-import com.perennial.pht.dao.IDao.IDoctorDao;
 import com.perennial.pht.model.Doctor;
 import com.perennial.pht.service.IService.IdoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

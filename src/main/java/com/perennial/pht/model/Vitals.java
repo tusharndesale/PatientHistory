@@ -1,18 +1,18 @@
 package com.perennial.pht.model;
 
-import lombok.*;
-import org.springframework.validation.annotation.Validated;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-//@Entity
-//@Table(name = "vitals")
+@Entity
+@Table(name = "vitals")
 public class Vitals {
 
 

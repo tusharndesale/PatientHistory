@@ -1,12 +1,12 @@
 package com.perennial.pht.dao;
 
 import com.perennial.pht.dao.IDao.IPatientDao;
+import com.perennial.pht.excel.PatientExcel;
 import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
 import com.perennial.pht.repository.PatientRepository;
 import com.perennial.pht.repository.VitalRepository;
-import com.perennial.pht.service.IService.IpatientService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,5 +98,15 @@ public class PatientDao implements IPatientDao {
         }
 
         return result;
+    }
+
+    @Override
+    public void uploadFile(MultipartFile file) {
+        try {
+            List<Patient> PatientList = PatientExcel.excelToPatient(file.getInputStream());
+            patientRepository.saveAll(PatientList);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store excel data: " + e.getMessage());
+        }
     }
 }

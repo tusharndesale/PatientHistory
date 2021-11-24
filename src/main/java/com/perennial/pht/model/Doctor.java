@@ -1,15 +1,11 @@
 package com.perennial.pht.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -38,7 +34,7 @@ public class Doctor {
     @CollectionTable(name="doctorsVitals", joinColumns = @JoinColumn(name="id"))
     private List<String> vitals;
 
-
+//
 
 
 }

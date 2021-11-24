@@ -4,7 +4,6 @@ import com.perennial.pht.dao.IDao.IDoctorDao;
 import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Doctor;
 import com.perennial.pht.repository.DoctorRepository;
-import com.perennial.pht.service.IService.IdoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

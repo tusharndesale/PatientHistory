@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class PatientService implements IpatientService {
     @Override
     public List<Vitals> getVitaldetails(Integer patientId) {
         return patientDao.getVitaldetails(patientId);
+    }
+
+    @Override
+    public void uploadFile(MultipartFile file) {
+        patientDao.uploadFile(file);
     }
 
     @Override

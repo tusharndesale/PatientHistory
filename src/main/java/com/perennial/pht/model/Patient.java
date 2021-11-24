@@ -1,14 +1,12 @@
 package com.perennial.pht.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.stream.Stream;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,13 +19,14 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @Column
+    @NotNull
     private String name;
     @Column
     private long mobileNo;
     @Column
     private String gender;
     @Column
-    private LocalDate DOB;
+    private Date DOB;
     @Column
     private String address;
 
