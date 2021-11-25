@@ -10,7 +10,6 @@ public class Register {
     @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
-  //  private Patient patient = new Patient();
     private LocalDate date;
 
 }

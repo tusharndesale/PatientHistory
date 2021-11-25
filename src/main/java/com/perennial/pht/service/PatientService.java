@@ -3,7 +3,7 @@ package com.perennial.pht.service;
 import com.perennial.pht.dao.PatientDao;
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
-import com.perennial.pht.service.IService.IpatientService;
+import com.perennial.pht.service.serviceInterfaces.IpatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

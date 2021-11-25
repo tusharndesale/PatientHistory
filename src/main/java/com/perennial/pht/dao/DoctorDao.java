@@ -1,6 +1,6 @@
 package com.perennial.pht.dao;
 
-import com.perennial.pht.dao.IDao.IDoctorDao;
+import com.perennial.pht.dao.daoInterfaces.IDoctorDao;
 import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Doctor;
 import com.perennial.pht.repository.DoctorRepository;
@@ -55,8 +55,6 @@ public class DoctorDao implements IDoctorDao {
 
     @Override
     public List<String> addVitals(List<String> vitalList) {
-
-
         return null;
     }
 

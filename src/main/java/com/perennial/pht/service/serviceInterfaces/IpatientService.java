@@ -1,4 +1,4 @@
-package com.perennial.pht.service.IService;
+package com.perennial.pht.service.serviceInterfaces;
 
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;

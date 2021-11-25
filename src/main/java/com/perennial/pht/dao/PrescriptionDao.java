@@ -1,6 +1,6 @@
 package com.perennial.pht.dao;
 
-import com.perennial.pht.dao.IDao.IPrescriptionDao;
+import com.perennial.pht.dao.daoInterfaces.IPrescriptionDao;
 import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Prescription;
 import com.perennial.pht.repository.MedicineRepository;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 @Repository
 public class PrescriptionDao implements IPrescriptionDao {
-//    @Autowired
-    public PrescriptionRepository prescriptionRepository;
-//    @Autowired
+
+     public PrescriptionRepository prescriptionRepository;
+
     public MedicineRepository medicineRepository;
 
     public Prescription createRecord(Prescription prescription) {

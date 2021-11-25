@@ -2,7 +2,7 @@ package com.perennial.pht.service;
 
 import com.perennial.pht.dao.PrescriptionDao;
 import com.perennial.pht.model.Prescription;
-import com.perennial.pht.service.IService.IprescriptionService;
+import com.perennial.pht.service.serviceInterfaces.IprescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

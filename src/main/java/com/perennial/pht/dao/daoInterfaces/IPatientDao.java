@@ -1,4 +1,4 @@
-package com.perennial.pht.dao.IDao;
+package com.perennial.pht.dao.daoInterfaces;
 
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
