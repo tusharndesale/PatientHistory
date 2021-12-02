@@ -25,15 +25,15 @@ public class DoctorService implements IdoctorService {
             return doctorDao.createRecord(doctor);
         }
 
-        public ResponseEntity<Doctor> getDoctorById(long doctorId) {
+        public ResponseEntity<Doctor> getDoctorById(Integer doctorId) {
             return doctorDao.getDoctorById(doctorId);
         }
 
-        public ResponseEntity<Doctor> updateDoctor(long doctorId, Doctor doctorDetails) {
+        public ResponseEntity<Doctor> updateDoctor(Integer doctorId, Doctor doctorDetails) {
             return doctorDao.updateDoctor(doctorId, doctorDetails);
         }
 
-        public ResponseEntity<HttpStatus> deleteDoctor(long doctorId) {
+        public ResponseEntity<HttpStatus> deleteDoctor(Integer doctorId) {
             return doctorDao.deleteDoctor(doctorId);
         }
 

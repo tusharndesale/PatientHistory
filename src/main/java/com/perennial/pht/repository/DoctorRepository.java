@@ -2,7 +2,9 @@ package com.perennial.pht.repository;
 
 import com.perennial.pht.model.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+@Repository
+public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
 }

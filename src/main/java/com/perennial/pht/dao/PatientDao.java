@@ -1,7 +1,7 @@
 package com.perennial.pht.dao;
 
 import com.perennial.pht.dao.daoInterfaces.IPatientDao;
-import com.perennial.pht.excel.PatientExcel;
+import com.perennial.pht.excel.ExcelToList;
 import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
@@ -41,13 +41,13 @@ public class PatientDao implements IPatientDao {
     }
 
     @Override
-    public ResponseEntity<Patient> getPatientById(long id) {
+    public ResponseEntity<Patient> getPatientById(Integer id) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
         return ResponseEntity.ok(patient);
     }
 
     @Override
-    public ResponseEntity<Patient> updatePatient(long id, Patient patientDetails) {
+    public ResponseEntity<Patient> updatePatient(Integer id, Patient patientDetails) {
         Patient updatePatient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
         updatePatient.setName(patientDetails.getName());
         updatePatient.setGender(patientDetails.getGender());
@@ -58,14 +58,14 @@ public class PatientDao implements IPatientDao {
     }
 
     @Override
-    public ResponseEntity<HttpStatus> deletePatient(long id) {
+    public ResponseEntity<HttpStatus> deletePatient(Integer id) {
         Patient findPatient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
         patientRepository.delete(findPatient);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public Patient testbyID(long id) {
+    public Patient testbyID(Integer id) {
         return patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
 
     }
@@ -96,10 +96,11 @@ public class PatientDao implements IPatientDao {
     }
 
     @Override
-    public void uploadFile(MultipartFile file) {
+    public List<Patient> uploadFile(MultipartFile file) {
         try {
-            List<Patient> PatientList = PatientExcel.excelToPatient(file.getInputStream());
-            patientRepository.saveAll(PatientList);
+            List<List<Patient>> resultList = ExcelToList.excelToPatient(file.getInputStream());
+            patientRepository.saveAll(resultList.get(0));
+            return resultList.get(1);
         } catch (IOException e) {
             throw new RuntimeException("fail to store excel data: " + e.getMessage());
         }

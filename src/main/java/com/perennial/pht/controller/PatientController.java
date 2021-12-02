@@ -1,6 +1,6 @@
 package com.perennial.pht.controller;
 
-import com.perennial.pht.excel.PatientExcel;
+import com.perennial.pht.excel.ExcelToList;
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
 import com.perennial.pht.service.serviceInterfaces.IpatientService;
@@ -40,17 +40,17 @@ public class PatientController {
     }
 
     @GetMapping("/findBy/{patientId}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable long patientId){
+    public ResponseEntity<Patient> getPatientById(@PathVariable Integer patientId){
         return patientService.getPatientById(patientId);
     }
 
     @PutMapping("/updateById/{patientId}")
-    public  ResponseEntity<Patient> updatePatient(@PathVariable long patientId, @RequestBody Patient patientDetails){
+    public  ResponseEntity<Patient> updatePatient(@PathVariable Integer patientId, @RequestBody Patient patientDetails){
         return patientService.updatePatient(patientId,patientDetails);
        }
 
     @DeleteMapping("/delete/{patientId}")
-    public ResponseEntity<HttpStatus> deletePatient(@PathVariable long patientId){
+    public ResponseEntity<HttpStatus> deletePatient(@PathVariable Integer patientId){
          return patientService.deletePatient(patientId);
 
     }
@@ -62,15 +62,20 @@ public class PatientController {
     }
     @PostMapping("/upload")
     public ResponseEntity<HttpStatus> uploadFile(@RequestParam("file") MultipartFile file) {
-
-        if (PatientExcel.hasExcelFormat(file)) {
+            long fileSize = file.getSize();
+        if (ExcelToList.hasExcelFormat(file) && fileSize>9500l) {
             try {
-                patientService.uploadFile(file);
-
+                List<Patient> issueRecordList = patientService.uploadFile(file);
+                if(issueRecordList.isEmpty()){
                 Path storageLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
                 Files.copy(file.getInputStream(), storageLocation, StandardCopyOption.REPLACE_EXISTING);
 
                 return new ResponseEntity<>(HttpStatus.OK);
+                }else {
+                    //create excel file
+
+                    return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+                }
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

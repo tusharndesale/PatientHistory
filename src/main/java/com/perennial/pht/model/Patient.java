@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,7 +26,7 @@ public class Patient {
     @Column
     private String gender;
     @Column
-    private Date DOB;
+    private LocalDate DOB;
     @Column
     private String address;
 
