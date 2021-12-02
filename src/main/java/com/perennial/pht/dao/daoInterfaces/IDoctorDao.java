@@ -12,11 +12,11 @@ public interface IDoctorDao {
 
     Doctor createRecord(Doctor doctor);
 
-    ResponseEntity<Doctor> getDoctorById(long doctorId);
+    ResponseEntity<Doctor> getDoctorById(Integer doctorId);
 
-    ResponseEntity<Doctor> updateDoctor(long doctorId, Doctor doctorDetails);
+    ResponseEntity<Doctor> updateDoctor(Integer doctorId, Doctor doctorDetails);
 
-    ResponseEntity<HttpStatus> deleteDoctor(long doctorId);
+    ResponseEntity<HttpStatus> deleteDoctor(Integer doctorId);
 
     List<String> addVitals(List<String> vitalList);
 }

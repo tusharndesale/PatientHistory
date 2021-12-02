@@ -28,13 +28,13 @@ public class DoctorDao implements IDoctorDao {
         }
 
         @Override
-        public ResponseEntity<Doctor> getDoctorById(long id) {
+        public ResponseEntity<Doctor> getDoctorById(Integer id) {
             Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor Does not Exist With id "+id));
             return ResponseEntity.ok(doctor);
         }
 
         @Override
-        public ResponseEntity<Doctor> updateDoctor(long id, Doctor doctorDetails) {
+        public ResponseEntity<Doctor> updateDoctor(Integer id, Doctor doctorDetails) {
             Doctor updateDoctor = doctorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor Does not Exist With id "+id));
             updateDoctor.setName(doctorDetails.getName());
             updateDoctor.setGender(doctorDetails.getGender());
@@ -47,7 +47,7 @@ public class DoctorDao implements IDoctorDao {
         }
 
         @Override
-        public ResponseEntity<HttpStatus> deleteDoctor(long id) {
+        public ResponseEntity<HttpStatus> deleteDoctor(Integer id) {
             Doctor findDoctor = doctorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor Does not Exist With id "+id));
             doctorRepository.delete(findDoctor);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -58,7 +58,7 @@ public class DoctorDao implements IDoctorDao {
         return null;
     }
 
-    public Doctor testbyID(long id) {
+    public Doctor testbyID(Integer id) {
             Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor Does not Exist With id "+id));
             return doctor;
 

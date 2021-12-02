@@ -12,11 +12,11 @@ public interface IdoctorService {
 
     public Doctor createRecord(Doctor doctor);
 
-    public ResponseEntity<Doctor> getDoctorById(long id);
+    public ResponseEntity<Doctor> getDoctorById(Integer id);
 
-    public ResponseEntity<Doctor> updateDoctor(long id, Doctor doctorDetails);
+    public ResponseEntity<Doctor> updateDoctor(Integer id, Doctor doctorDetails);
 
-    public ResponseEntity<HttpStatus> deleteDoctor(long id);
+    public ResponseEntity<HttpStatus> deleteDoctor(Integer id);
 
     List<String> addVitals(List<String> vitalList);
 }

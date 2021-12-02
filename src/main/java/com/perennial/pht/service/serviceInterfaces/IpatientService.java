@@ -14,18 +14,18 @@ public interface IpatientService {
 
     Patient createRecord(Patient patient);
 
-    ResponseEntity<Patient> getPatientById(long id);
+    ResponseEntity<Patient> getPatientById(Integer id);
 
-    ResponseEntity<Patient> updatePatient(long id, Patient patientDetails);
+    ResponseEntity<Patient> updatePatient(Integer id, Patient patientDetails);
 
-    ResponseEntity<HttpStatus> deletePatient(long id);
+    ResponseEntity<HttpStatus> deletePatient(Integer id);
 
-    Patient testbyID(long id);
+    Patient testbyID(Integer id);
 
     Vitals addPatientVital(Vitals vitalValues);
 
 
     List<Vitals> getVitaldetails(Integer patientId);
 
-    void uploadFile(MultipartFile file);
+    List<Patient> uploadFile(MultipartFile file);
 }
