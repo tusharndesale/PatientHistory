@@ -19,7 +19,7 @@ public class PatientService implements IpatientService {
     @Autowired
     public PatientDao patientDao;
 
-    public Patient testbyID(long id) {
+    public Patient testbyID(Integer id) {
         return patientDao.testbyID(id);
     }
 
@@ -34,8 +34,8 @@ public class PatientService implements IpatientService {
     }
 
     @Override
-    public void uploadFile(MultipartFile file) {
-        patientDao.uploadFile(file);
+    public List<Patient> uploadFile(MultipartFile file) {
+        return patientDao.uploadFile(file);
     }
 
     @Override
@@ -49,17 +49,17 @@ public class PatientService implements IpatientService {
     }
 
     @Override
-    public ResponseEntity<Patient> getPatientById(long patientId) {
+    public ResponseEntity<Patient> getPatientById(Integer patientId) {
         return patientDao.getPatientById(patientId);
     }
 
     @Override
-    public ResponseEntity<Patient> updatePatient(long patientId, Patient patientDetails) {
+    public ResponseEntity<Patient> updatePatient(Integer patientId, Patient patientDetails) {
         return patientDao.updatePatient(patientId, patientDetails);
     }
 
     @Override
-    public ResponseEntity<HttpStatus> deletePatient(long patientId) {
+    public ResponseEntity<HttpStatus> deletePatient(Integer patientId) {
         return patientDao.deletePatient(patientId);
     }
 

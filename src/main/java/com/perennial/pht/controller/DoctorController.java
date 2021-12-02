@@ -25,20 +25,20 @@ public class DoctorController {
     }
 
     @GetMapping("/findBy/{doctorId}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable long doctorId){
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable Integer doctorId){
        // return service.getDoctorById(doctorId);
         return doctorService.getDoctorById(doctorId);
 
     }
 
     @PutMapping("/updateById/{doctorId}")
-    public  ResponseEntity<Doctor> updateDoctor(@PathVariable long doctorId, @RequestBody Doctor doctorDetails){
+    public  ResponseEntity<Doctor> updateDoctor(@PathVariable Integer doctorId, @RequestBody Doctor doctorDetails){
         return doctorService.updateDoctor(doctorId,doctorDetails);
 
     }
 
     @DeleteMapping("/delete/{doctorId}")
-    public ResponseEntity<HttpStatus> deleteDoctor(@PathVariable long doctorId){
+    public ResponseEntity<HttpStatus> deleteDoctor(@PathVariable Integer doctorId){
         return doctorService.deleteDoctor(doctorId);
     }
     @PostMapping("/addVital")
