@@ -1,5 +1,7 @@
 package com.perennial.pht.excel;
 
+import com.perennial.pht.controller.PatientController;
+import com.perennial.pht.dao.daoInterfaces.IPatientDao;
 import com.perennial.pht.model.Patient;
 import com.perennial.pht.repository.PatientRepository;
 import com.perennial.pht.utilities.CommonUtility;
@@ -8,6 +10,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +31,9 @@ public class ExcelToList {
     static CommonUtility utility;
     @Autowired
     static PatientRepository repository;
-  //  static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    @Autowired
+    static IPatientDao patientDao;
+    private static PatientController controller;
   static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static boolean hasExcelFormat(MultipartFile file) {
@@ -37,22 +44,49 @@ public class ExcelToList {
         return true;
     }
 
-    public static List<List<Patient>> excelToPatient(InputStream is) {
+    public static List<List<Patient>> excelToPatient(InputStream inputStream, SessionFactory sessionfactory) {
         try {
-            Workbook workbook = new XSSFWorkbook(is);
+            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheet("data");
             Iterator<Row> rows = sheet.iterator();
             List<Patient> recordList = new ArrayList<>();
             List<Patient> issueRecordList = new ArrayList<>();
+            List<String> headerList = new ArrayList<>();
             String message= "";
             int rowNumber = 0;
             while (rows.hasNext()) {
                 Row currentRow = rows.next();
+                Iterator<Cell> cellsInRow = currentRow.iterator();
                 if (rowNumber == 0) {
+                    while (cellsInRow.hasNext()) {
+                        Cell headerCell = cellsInRow.next();
+                        int headerCellNumber = 0;
+                        switch (headerCellNumber) {
+                            case 0:
+                                headerList.add(0,headerCell.getStringCellValue());
+                                break;
+                            case 1:
+                                headerList.add(1,headerCell.getStringCellValue());
+                                break;
+                            case 2:
+                                headerList.add(2,headerCell.getStringCellValue());
+                                break;
+                            case 3:
+                                headerList.add(3,headerCell.getStringCellValue());
+                                break;
+                            case 4:
+                                headerList.add(4,headerCell.getStringCellValue());
+                                break;
+                            case 5:
+                                headerList.add(5,headerCell.getStringCellValue());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     rowNumber++;
                     continue;
                 }
-                Iterator<Cell> cellsInRow = currentRow.iterator();
 
                 Patient patient = new Patient();
                 double id = 0;
@@ -87,10 +121,9 @@ public class ExcelToList {
 
                     cellNumber++;
                 }
-                //check Validatin
                 boolean mobileNoChecked = utility.isValidMobileNo(patient.getMobileNo());
 
-                    List<Patient> existanceInDBList = repository.existsByNameAndMobileNo(patient.getName(),patient.getMobileNo());
+                    List<Patient> existanceInDBList = checkInDB(patient.getName(),patient.getMobileNo(),sessionfactory);
                List<Patient> existanceInRecordList = recordList.stream().filter(
                         ele -> (patient.getMobileNo()==ele.getMobileNo())
                                 || (patient.getName().equals(ele.getName()))
@@ -111,7 +144,6 @@ public class ExcelToList {
             }
 
             workbook.close();
-
             List<List<Patient>> result= new ArrayList<>();
             result.add(recordList);
             result.add(issueRecordList);
@@ -120,4 +152,29 @@ public class ExcelToList {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
         }
     }
+
+    private static List<Patient> checkInDB(String fullName, long mobileNumber, SessionFactory sessionfactory) {
+        String hql;
+        List<Patient> result = new ArrayList<>();
+        Patient patient ;
+        String patientName = fullName.replace(' ','%') ;
+
+        try{
+
+            Session session = sessionfactory.openSession();
+            hql = "FROM Patient WHERE name LIKE '"+patientName+"' AND mobileNo = "+mobileNumber;
+            Query query = session.createQuery(hql);
+
+            patient = (Patient) query.getSingleResult();
+            if (patient == null) return null;
+            else {
+                result.add(patient);
+
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return  result;
+    }
+
 }

@@ -19,4 +19,5 @@ public interface IDoctorDao {
     ResponseEntity<HttpStatus> deleteDoctor(Integer doctorId);
 
     List<String> addVitals(List<String> vitalList);
+
 }

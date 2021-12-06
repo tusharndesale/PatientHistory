@@ -27,4 +27,5 @@ public interface IPatientDao {
     List<Vitals> getVitaldetails(Integer patientId);
 
     List<Patient> uploadFile(MultipartFile file);
+
 }
