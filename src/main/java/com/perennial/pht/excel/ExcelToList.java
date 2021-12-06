@@ -91,18 +91,15 @@ public class ExcelToList {
                 boolean mobileNoChecked = utility.isValidMobileNo(patient.getMobileNo());
 
                     List<Patient> existanceInDBList = repository.existsByNameAndMobileNo(patient.getName(),patient.getMobileNo());
-                    existanceInDBList.forEach(ele-> System.out.println("existanceInDBList: "+ele.toString()));
                List<Patient> existanceInRecordList = recordList.stream().filter(
                         ele -> (patient.getMobileNo()==ele.getMobileNo())
                                 || (patient.getName().equals(ele.getName()))
                 ).collect(Collectors.toList());
-                existanceInRecordList.forEach(ele-> System.out.println("existanceInRecordList: "+ele.toString()));
 
                 List<Patient> existanceInIssueRecordList= issueRecordList.stream().filter(
                         ele -> (patient.getMobileNo()==ele.getMobileNo())
                             || (patient.getName().equals(ele.getName()))
                 ).collect(Collectors.toList());
-                existanceInIssueRecordList.forEach(ele-> System.out.println("existanceInIssueRecordList: "+ele.toString()));
 
                 if(!mobileNoChecked || !existanceInDBList.isEmpty() || !existanceInRecordList.isEmpty() || !existanceInIssueRecordList.isEmpty()) {
                     message = "Invalid Mobile No. "+patient.toString();
@@ -114,12 +111,7 @@ public class ExcelToList {
             }
 
             workbook.close();
-            issueRecordList.forEach(ele->{
-                System.out.println("issueRecordList: "+ele.toString());
-            });
-            recordList.forEach(ele->{
-                System.out.println("RecordList: "+ele.toString());
-            });
+
             List<List<Patient>> result= new ArrayList<>();
             result.add(recordList);
             result.add(issueRecordList);
