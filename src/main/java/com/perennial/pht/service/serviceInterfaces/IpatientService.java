@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface IpatientService {
@@ -24,8 +25,9 @@ public interface IpatientService {
 
     Vitals addPatientVital(Vitals vitalValues);
 
-
     List<Vitals> getVitaldetails(Integer patientId);
 
     List<Patient> uploadFile(MultipartFile file);
+
+    ByteArrayInputStream load(List<String> headerList, List<Patient> issueRecordList);
 }

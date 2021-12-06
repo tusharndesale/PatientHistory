@@ -29,7 +29,7 @@ public class PatientDao implements IPatientDao {
     private PatientRepository patientRepository;
     @Autowired
     private VitalRepository vitalRepository;
-
+  //  private CommonUtility utility;
     @Override
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
@@ -98,7 +98,7 @@ public class PatientDao implements IPatientDao {
     @Override
     public List<Patient> uploadFile(MultipartFile file) {
         try {
-            List<List<Patient>> resultList = ExcelToList.excelToPatient(file.getInputStream());
+            List<List<Patient>> resultList = ExcelToList.excelToPatient(file.getInputStream(), sessionfactory);
             patientRepository.saveAll(resultList.get(0));
             return resultList.get(1);
         } catch (IOException e) {

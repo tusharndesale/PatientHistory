@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
-    @Query(value = "FROM patient p WHERE p.name = :name and p.mobileNo = :mobileNo", nativeQuery = true)
+    @Query(value = "FROM Patient p WHERE p.name = :name and p.mobileNo = :mobileNo", nativeQuery = true)
     List<Patient> existsByNameAndMobileNo(@Param("name") String name, @Param("mobileNo") long mobileNo);
 }
 
