@@ -5,6 +5,8 @@ import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
 import com.perennial.pht.service.serviceInterfaces.IpatientService;
 import com.perennial.pht.utilities.CommonUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 @Service
 @Transactional
 public class PatientService implements IpatientService {
+    public static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Autowired
     public PatientDao patientDao;
     CommonUtility utility = new CommonUtility();

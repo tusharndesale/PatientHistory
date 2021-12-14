@@ -2,17 +2,23 @@ package com.perennial.pht.controller;
 
 import com.perennial.pht.model.Prescription;
 import com.perennial.pht.service.serviceInterfaces.IprescriptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/prescription")
 public class PrescriptionController {
 
+    @Autowired
 public IprescriptionService prescriptionService;
 
     @PostMapping("/save")
     public Prescription createRecord(@RequestBody Prescription prescription){
+        prescription.setDate(LocalDate.now());
+        System.out.println(prescription);
         return prescriptionService.createRecord(prescription);
     }
     @GetMapping("/findBy/{id}")

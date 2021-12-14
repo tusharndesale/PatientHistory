@@ -13,11 +13,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ import java.util.stream.Collectors;
 
 
 public class ExcelToList {
+    public static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     static CommonUtility utility;
     @Autowired
@@ -47,45 +52,17 @@ public class ExcelToList {
     public static List<List<Patient>> excelToPatient(InputStream inputStream, SessionFactory sessionfactory) {
         try {
             Workbook workbook = new XSSFWorkbook(inputStream);
-            Sheet sheet = workbook.getSheet("data");
+            Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
             List<Patient> recordList = new ArrayList<>();
             List<Patient> issueRecordList = new ArrayList<>();
-            List<String> headerList = new ArrayList<>();
             String message= "";
             int rowNumber = 0;
             while (rows.hasNext()) {
                 Row currentRow = rows.next();
                 Iterator<Cell> cellsInRow = currentRow.iterator();
                 if (rowNumber == 0) {
-                    while (cellsInRow.hasNext()) {
-                        Cell headerCell = cellsInRow.next();
-                        int headerCellNumber = 0;
-                        switch (headerCellNumber) {
-                            case 0:
-                                headerList.add(0,headerCell.getStringCellValue());
-                                break;
-                            case 1:
-                                headerList.add(1,headerCell.getStringCellValue());
-                                break;
-                            case 2:
-                                headerList.add(2,headerCell.getStringCellValue());
-                                break;
-                            case 3:
-                                headerList.add(3,headerCell.getStringCellValue());
-                                break;
-                            case 4:
-                                headerList.add(4,headerCell.getStringCellValue());
-                                break;
-                            case 5:
-                                headerList.add(5,headerCell.getStringCellValue());
-                                break;
-                            default:
-                                break;
-                        }
-                    }
                     rowNumber++;
-                    continue;
                 }
 
                 Patient patient = new Patient();
@@ -155,8 +132,7 @@ public class ExcelToList {
 
     private static List<Patient> checkInDB(String fullName, long mobileNumber, SessionFactory sessionfactory) {
         String hql;
-        List<Patient> result = new ArrayList<>();
-        Patient patient ;
+        List<Patient> result = null;
         String patientName = fullName.replace(' ','%') ;
 
         try{
@@ -164,12 +140,11 @@ public class ExcelToList {
             Session session = sessionfactory.openSession();
             hql = "FROM Patient WHERE name LIKE '"+patientName+"' AND mobileNo = "+mobileNumber;
             Query query = session.createQuery(hql);
-
-            patient = (Patient) query.getSingleResult();
-            if (patient == null) return null;
-            else {
-                result.add(patient);
-
+            try {
+                result = query.getResultList();
+                LOGGER.warn(" Duplicate Record Found in Database With "+ fullName+" & "+mobileNumber);
+            }catch (Exception ex){
+                LOGGER.info("No Duplicate Record Found in Database With "+ fullName+" & "+mobileNumber);
             }
         }catch(Exception ex){
             ex.printStackTrace();

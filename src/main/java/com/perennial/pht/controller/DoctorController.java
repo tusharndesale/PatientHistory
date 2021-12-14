@@ -13,6 +13,7 @@ import java.util.List;
 public class DoctorController {
 
 
+
     public IdoctorService doctorService;
 
     @GetMapping("/getAll")
@@ -21,6 +22,7 @@ public class DoctorController {
     }
     @PostMapping("/save")
     public Doctor createRecord(@RequestBody Doctor doctor){
+        System.out.println("*******"+doctor.toString());
         return doctorService.createRecord(doctor);
     }
 
@@ -45,5 +47,8 @@ public class DoctorController {
     public List<String> addVitals(@RequestBody List<String> vitalList){
         return doctorService.addVitals(vitalList);
     }
+
+
+
 
 }

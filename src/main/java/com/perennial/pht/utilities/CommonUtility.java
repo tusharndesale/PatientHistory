@@ -1,18 +1,19 @@
 package com.perennial.pht.utilities;
 
 import com.perennial.pht.model.Patient;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class CommonUtility {
+
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     static String SHEET = "sheet";
      Workbook workbook = new XSSFWorkbook();
@@ -25,54 +26,6 @@ public class CommonUtility {
         return result;
     }
 
-    public static List<String> getHeaderList(InputStream inputStream)  {
-        List<String> headerList = new ArrayList<>();
-        try{
-       Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheet("data");
-        Iterator<Row> rows = sheet.iterator();
-        int rowNumber = 0;
-        while (rows.hasNext()) {
-            Row currentRow = rows.next();
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            if (rowNumber == 0) {
-                while (cellsInRow.hasNext()) {
-                    Cell headerCell = cellsInRow.next();
-                    int headerCellNumber = 0;
-                    switch (headerCellNumber) {
-                        case 0:
-                            if(headerCell.getCellType() == CellType.NUMERIC)
-                            headerList.add(0, String.valueOf(headerCell.getNumericCellValue()));
-                            else
-                                headerList.add(0, headerCell.getStringCellValue());
-                            break;
-                        case 1:
-                            headerList.add(1, headerCell.getStringCellValue());
-                            break;
-                        case 2:
-                            headerList.add(2, headerCell.getStringCellValue());
-                            break;
-                        case 3:
-                            headerList.add(3, headerCell.getStringCellValue());
-                            break;
-                        case 4:
-                            headerList.add(4, headerCell.getStringCellValue());
-                            break;
-                        case 5:
-                            headerList.add(5, headerCell.getStringCellValue());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                continue;
-            }
-        }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    return headerList;
-    }
 
     public ByteArrayInputStream createExcelFromList(List<String> headerList, List<Patient> issueRecordList) {
         try {

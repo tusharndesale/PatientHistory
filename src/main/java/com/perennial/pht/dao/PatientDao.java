@@ -7,10 +7,14 @@ import com.perennial.pht.model.Patient;
 import com.perennial.pht.model.Vitals;
 import com.perennial.pht.repository.PatientRepository;
 import com.perennial.pht.repository.VitalRepository;
+import com.perennial.pht.utilities.CommonUtility;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +22,22 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class PatientDao implements IPatientDao {
+    public static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Autowired(required = false)
     SessionFactory sessionfactory;
     @Autowired
     private PatientRepository patientRepository;
     @Autowired
     private VitalRepository vitalRepository;
-  //  private CommonUtility utility;
+    private CommonUtility utility;
     @Override
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
@@ -66,6 +74,7 @@ public class PatientDao implements IPatientDao {
 
     @Override
     public Patient testbyID(Integer id) {
+
         return patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient Does not Exist With id " + id));
 
     }

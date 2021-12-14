@@ -5,15 +5,16 @@ import com.perennial.pht.exception.ResourceNotFoundException;
 import com.perennial.pht.model.Prescription;
 import com.perennial.pht.repository.MedicineRepository;
 import com.perennial.pht.repository.PrescriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 @Repository
 public class PrescriptionDao implements IPrescriptionDao {
-
+    @Autowired
      public PrescriptionRepository prescriptionRepository;
-
+    @Autowired
     public MedicineRepository medicineRepository;
 
     public Prescription createRecord(Prescription prescription) {
